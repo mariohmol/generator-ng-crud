@@ -16,6 +16,11 @@ Then generate your new project:
 yo ng-crud
 ```
 
+## Contribute
+
+Thanks to:
+* https://github.com/gorums/generator-angular-2-crud
+
 ## License
 
 Apache-2.0 © [Mario Mol]()
