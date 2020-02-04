@@ -64,21 +64,17 @@ module.exports = class extends Generator {
 
     const r = schemaParser(this.props.dataModel, this.props.baseurl)
       .then(r => {
-        // console.log(`RETURRRN`, r)
         const models = Object.keys(r.schemas).map(s => r.schemas[s].schema);
-        // console.log(models)
         var entities = utils.getEntities(r.schemas, ["relativeURI"]);
         console.log(entities);
         (makeApp.bind(this))(models);
         (makeBaseEntities.bind(this))(entities);
         (makeEntities.bind(this))(entities, this.props.relativeurl);
-
       });
-    // var models = JSON.parse(fs.readFileSync(this.props.dataModel, "utf8"));
   }
 
   install() {
-    // TODO: this.installDependencies();
+    this.installDependencies();
   }
 };
 

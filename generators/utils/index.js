@@ -47,7 +47,7 @@ getEntities = (models, except) => {
     var k = key(models[entityName]);
 
     transf.push({
-      'entity': models[entityName],
+      'entity': models[entityName].schema.properties,
       'key': k,
 
       'name': entityName,
