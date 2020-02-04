@@ -18,7 +18,10 @@ singular = (entityName) => {
 };
 
 key = (entity) => {
-  return Object.keys(entity).filter((field) => entity[field].key);
+  const k = Object.keys(entity).filter((field) => entity[field].key);
+  if (k.length == 0) {
+    return Object.keys(entity).filter((field) => field.toLowerCase() === 'id' || field.toLowerCase() === '_id');
+  }
 };
 
 referent = (entity) => {
@@ -44,10 +47,20 @@ getEntities = (models, except) => {
   return entities.reduce((transf, entityName) => {
     var p = pluralize(entityName);
     var s = singular(entityName);
-    var k = key(models[entityName]);
+    const properties = models[entityName].schema.properties;
+    for (kprop in properties) {
+      const field = properties[kprop];
+      field['defaultForm'] = field.default != undefined ? field.default : 'null';
+      console.log(field)
+    }
+    var k = key(properties);
+
+    if (k.length === 0) {
+      console.error(`No Keys found for ${entityName}`)
+    }
 
     transf.push({
-      'entity': models[entityName].schema.properties,
+      'entity': properties,
       'key': k,
 
       'name': entityName,

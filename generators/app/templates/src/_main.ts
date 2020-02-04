@@ -1,25 +1,12 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser'
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
-import { App, providers, routes, containers, ui } from './app';
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-@NgModule({
-    declarations: [
-        App,
-        ...containers,
-        ...ui
-    ],
-    imports: [
-        BrowserModule, 
-        FormsModule,
-        HttpModule,
-        routes
-    ],
-    providers,
-    bootstrap: [App]
-})
-export class AppModule {};
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+if (environment.production) {
+  enableProdMode();
+}
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.log(err));

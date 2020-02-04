@@ -8,38 +8,13 @@
 import {
   <% if(relations) {%><% relations.forEach(function (relation) {%><%= relation.capitalize %>Model,<% })%><% }%>
   <%= entity.capitalize %>Model
-} from '../../models';
+} from '../models';
 
 @Component({
     selector: '[<%= entity.singularUncapitalize %>-ui]',
-    template: `
-<% Object.keys(entity.entity).forEach(function(field){ if(!entity.entity[field].referent) { -%>
-        <td>{{<%= entity.singularUncapitalize %>.<%= field %>}}</td>
-<%} }) -%>        
-<% if(relations) { -%>
-<% relations.forEach(function (relation) { -%>
-<% Object.keys(entity.entity).forEach(function(field){ if(entity.entity[field].render) { -%>
-        <td *ngIf="<%= relation.singularUncapitalize %>">{{<%= relation.singularUncapitalize %>.<%= entity.entity[field].render %> || "No <%= relation.singularCapitalize %>"}}</td>
-<%} }) -%>
-        <td *ngIf="!<%= relation.singularUncapitalize %>"></td>
-<% }) -%>
-<% } -%>        
-        <td <%= entity.singularUncapitalize %>-edit-ui 
-                [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>" 
-<% if(relations) { -%> 
-<% relations.forEach(function (relation) { -%>
-                [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>"
-<% }) -%>
-<% } -%>
-                (onEditHandler)="onEdit<%= entity.capitalize %>($event)">
-        </td>
-        <td <%= entity.singularUncapitalize %>-delete-ui 
-            [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
-            (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)">
-        </td>
-    `
+    templateUrl: './<%= entity.singularUncapitalize %>.component.html'
 })
-export class <%= entity.capitalize %> {
+export class <%= entity.capitalize %>Component {
     @Input() <%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model;
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>

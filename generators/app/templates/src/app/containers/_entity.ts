@@ -15,7 +15,7 @@ import {
 <% }) -%>
 <% } -%>
   <%= entity.capitalize %>Service
-} from '../services';
+} from '../<%= entity.uncapitalize %>/<%= entity.uncapitalize %>.service';
 
 import { Store } from '../store';
 import 'rxjs/Rx';
