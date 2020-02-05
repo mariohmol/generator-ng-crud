@@ -4,22 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-
-import * as c from './containers';
-import { ApiService } from './api';
-import { Store } from './store';
-import { StoreHelper } from './store/helper'; 
 export { AppComponent } from './app.component';
-
-const mapValuesToArray = (obj) => Object.keys(obj).map(key => obj[key]);
-
-// export { routes } from './routes';
-export const providers = [
-  ApiService,
-  Store,
-  StoreHelper
-  // ...mapValuesToArray(services)
-];
+import * as c from './containers';
 
 export const containers = mapValuesToArray(c);
 // export const ui = mapValuesToArray(u);
@@ -47,7 +33,6 @@ import { <%= entity.capitalize %>Module } from './<%= entity.uncapitalize %>/<%=
     <% }) -%>
   ],
   providers: [
-    ...providers,
     {
       provide: LOCALE_ID, useValue: 'pt-BR'
     }
@@ -216,10 +201,10 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 <% } -%>
 
 <% if (props.pwa) { -%>
-import { environment } from '@env/environment';
+import { environment } from '../../../environments/environment';
 <% } -%>
-import { CoreModule } from '@app/core';
-import { SharedModule } from '@app/shared';
+import { CoreModule } from './core';
+import { SharedModule } from '../app/shared';
 import { HomeModule } from './home/home.module';
 import { ShellModule } from './shell/shell.module';
 <% if (!props.lazy) { -%>

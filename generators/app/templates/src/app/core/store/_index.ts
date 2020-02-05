@@ -1,7 +1,6 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { State, defaultState } from './state'
-import 'rxjs/Rx';
 
 const _store = new BehaviorSubject<State>(defaultState);
 

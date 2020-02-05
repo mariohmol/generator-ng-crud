@@ -7,6 +7,18 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouteReusableStrategy } from './route-reusable-strategy';
 import { HttpService } from './http/http.service';
 
+import { ApiService } from './api.service';
+import { Store } from './store';
+import { StoreHelper } from './store/helper'; 
+
+
+
+export const providers = [
+  ApiService,
+  Store,
+  StoreHelper
+];
+
 @NgModule({
   imports: [
     CommonModule,
@@ -22,7 +34,8 @@ import { HttpService } from './http/http.service';
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy
-    }
+    },
+    ...providers
   ]
 })
 export class CoreModule {

@@ -74,10 +74,9 @@ module.exports = class extends Generator {
 
         // Copy Folders
         copyFolder = copyFolder.bind(this) 
-        const folder = [`src/translations/`, `src/environments/`, `src/app/core/`, `src/app/home/`,   `src/app/shared/`];
+        const folder = [`src/translations/`, `src/environments/`, `src/app/core/`, 
+        `src/app/home/`,   `src/app/shared/`, `src/app/login/`];
         folder.forEach(f=>copyFolder(f));
-
-        copyFolder(`src/app/login/`, (f) => f.replace(/_/g, '').replace(/auth./g, '').replace(/auth+ionic./g, ''));
 
         // Make custom files
         (makeApp.bind(this))();
@@ -94,7 +93,7 @@ module.exports = class extends Generator {
 function copyFolder(folder, replace) {
   const files = glob.sync(`**${folder}**`, { dot: true, nodir: true, cwd: this.templatePath() })
   if (!replace) {
-    replace = (f) => f.replace(/_/g, '')
+    replace = (f) => f.replace(/_/g, '').replace(/auth./g, '').replace(/auth+ionic./g, '')
   }
   for (let i in files) {
     console.log(files[i])

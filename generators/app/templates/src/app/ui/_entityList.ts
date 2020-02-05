@@ -17,8 +17,7 @@ import {
   <%= entity.capitalize %>Service
 } from '../<%= entity.uncapitalize %>/<%= entity.uncapitalize %>.service';
 
-import { Store } from '../store';
-import 'rxjs/Rx';
+import { Store } from '../core/store';
 
 @Component({
   selector: '<%= entity.pluralizeUncapitalize %>-container',

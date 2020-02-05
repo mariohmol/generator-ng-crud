@@ -48,7 +48,7 @@ export class ApiService {
     return url;
   }
 
-  doGet(url: string, query = null) {
+  get(url: string, query = null) {
     return new Promise((resolve, reject) => {
       const headers = this.doHeaders(null);
       const finalUrl = this.doQueryString(this.apiUrl + url, query);
@@ -62,11 +62,11 @@ export class ApiService {
     });
   }
 
-  doPost(url: string, data: any, files: any = null) {
+  post(url: string, data: any, files: any = null) {
     return new Promise((resolve, reject) => {
       const headers = this.doHeaders(data); 
       if (files) {
-        headers._headers.delete('content-type');
+        headers.delete('content-type');
       }
       if (!data) {
         data = {};
@@ -97,7 +97,7 @@ export class ApiService {
   }
 
 
-  doPut(url: string, data: any = null) {
+  put(url: string, data: any = null) {
     return new Promise((resolve, reject) => {
       const headers = this.doHeaders(data);
       if (!data) {
@@ -113,7 +113,7 @@ export class ApiService {
     });
   }
 
-  doDelete(url: string) {
+  delete(url: string) {
     return new Promise((resolve, reject) => {
       const headers = this.doHeaders();
       return this.http.delete(this.apiUrl + url, { headers: headers })

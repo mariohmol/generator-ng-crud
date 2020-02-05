@@ -8,19 +8,22 @@ export class StoreHelper {
   update(prop, state) {
     const currentState = this.store.getState();
     this.store.setState(Object.assign({}, currentState, { [prop]: state }));
+    return state;
   }
 
   add(prop, state) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
     this.store.setState(Object.assign({}, currentState, { [prop]: [state, ...collection] }));
+    return state;
   }
 
   findAndUpdate(prop, state) {
     const currentState = this.store.getState();
     const collection = currentState[prop];
 
-    this.store.setState(Object.assign({}, currentState, {[prop]: this.store.getCollection(collection, prop, state)}))
+    this.store.setState(Object.assign({}, currentState, {[prop]: this.store.getCollection(collection, prop, state)}));
+    return state;
   }
 
   findAndDelete(prop, id) {

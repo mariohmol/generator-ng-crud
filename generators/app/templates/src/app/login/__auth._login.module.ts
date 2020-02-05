@@ -12,7 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 <% } -%>
 
 <% if (props.ui === 'material') { -%>
-import { SharedModule } from '@app/shared';
+import { SharedModule } from '../app/shared';
 import { MaterialModule } from '@app/material.module';
 <% } -%>
 import { LoginRoutingModule } from './login-routing.module';
