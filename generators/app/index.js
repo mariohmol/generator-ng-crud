@@ -2,6 +2,7 @@
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
+const glob = require('glob');
 // const fs = require("fs");
 const path = require("path");
 const utils = require("../utils");
@@ -54,22 +55,33 @@ module.exports = class extends Generator {
     return this.prompt(prompts).then(
       function (props) {
         // To access props later use this.props.someAnswer;
-        this.props = props;
+        this.props = {
+          ...props,
+          target: 'ionic electron',
+          tools: ''
+        };
       }.bind(this)
     );
   }
 
   writing() {
     console.log("after calling readFile", path.join(__dirname, this.props.dataModel));
-
+    
     const r = schemaParser(this.props.dataModel, this.props.baseurl)
       .then(r => {
-        const models = Object.keys(r.schemas).map(s => r.schemas[s].schema);
-        var entities = utils.getEntities(r.schemas, ["relativeURI"]);
-        console.log(entities);
-        (makeApp.bind(this))(models, entities);
-        (makeBaseEntities.bind(this))(entities);
-        (makeEntities.bind(this))(entities, this.props.relativeurl);
+        this.models = Object.keys(r.schemas).map(s => r.schemas[s].schema);
+        this.entities = utils.getEntities(r.schemas, ["relativeURI"]);
+
+        // Copy Folders
+        copyFolder = copyFolder.bind(this) 
+        const folder = [`src/translations/`, `src/environments/`, `src/app/core/`, `src/app/home/`,   `src/app/shared/`];
+        folder.forEach(f=>copyFolder(f));
+
+        copyFolder(`src/app/login/`, (f) => f.replace(/_/g, '').replace(/auth./g, '').replace(/auth+ionic./g, ''));
+
+        // Make custom files
+        (makeApp.bind(this))();
+        (makeEntities.bind(this))();
       });
   }
 
@@ -79,20 +91,38 @@ module.exports = class extends Generator {
 };
 
 
-
+function copyFolder(folder, replace) {
+  const files = glob.sync(`**${folder}**`, { dot: true, nodir: true, cwd: this.templatePath() })
+  if (!replace) {
+    replace = (f) => f.replace(/_/g, '')
+  }
+  for (let i in files) {
+    console.log(files[i])
+    this.fs.copyTpl(
+      this.templatePath(files[i]),
+      this.destinationPath(replace(files[i])),
+      {
+        props: this.props,
+        entities: this.entities,
+        models: this.models
+      }
+    )
+  }
+}
 /**
  * Generate App Process
  * @param {*} models 
  */
-function makeApp(models, entities) {
-  
+function makeApp() {
+  const { models, entities, props } = this;
   this.fs.copyTpl(
     this.templatePath("_package.json"),
     this.destinationPath("package.json"),
     {
       name: this.props.name,
       description: this.props.description,
-      version: this.props.version
+      version: this.props.version,
+      props
     }
   );
 
@@ -104,72 +134,62 @@ function makeApp(models, entities) {
       description: this.props.description,
       version: this.props.version,
       dataModel: this.props.dataModel,
-      models: JSON.stringify(models, null, 2)
+      models: JSON.stringify(models, null, 2),
+      props
     }
   );
 
   const filesCopy = {
-    '.angular-cli.json': '.angular-cli.json',
+    '_angular.json': 'angular.json',
     '.editorconfig': '.editorconfig',
-    '.gitignore': '.gitignore',
     '.gitignore': '.gitignore',
     'karma.conf.js': 'karma.conf.js',
     'protractor.conf.js': 'protractor.conf.js',
     '_tsconfig.json': 'tsconfig.json',
+    'tsconfig.app.json': 'tsconfig.app.json',
+    'src/_tsconfig.app.json': 'src/tsconfig.app.json',
     '_tslint.json': 'tslint.json',
     'src/assets/.gitkeep': 'src/assets/.gitkeep',
-    'src/environments/environment.prod.ts': 'src/environments/environment.prod.ts',
-    'src/environments/environment.ts': 'src/environments/environment.ts',
     'src/favicon.ico': 'src/favicon.ico',
     'src/test.ts': 'src/test.ts',
-    'src/tsconfig.app.json': 'src/tsconfig.app.json',
-    'src/tsconfig.spec.json': 'src/tsconfig.spec.json',
+    'tsconfig.spec.json': 'tsconfig.spec.json',
     'src/typings.d.ts': 'src/typings.d.ts',
+    'src/_main.scss': 'src/main.scss',
+    'src/theme/__ionic.theme-variables.scss': 'src/theme/theme-variables.scss',
+    'src/theme/_theme.scss': 'src/theme/theme.scss',
     'src/styles.css': 'src/styles.css',
     'src/_global.css': 'src/global.css',
     'src/_polyfills.ts': 'src/polyfills.ts',
     'src/_vendor.ts': 'src/vendor.ts',
     'src/_main.ts': 'src/main.ts',
-    'src/app/_api.ts': 'src/app/api.ts',
     'src/app/_app.component.ts': 'src/app/app.component.ts',
     'src/app/app.component.html': 'src/app/app.component.html',
     'src/app/app.component.css': 'src/app/app.component.css',
     'src/app/_app.module.ts': 'src/app/app.module.ts',
-    'src/app/_index.ts': 'src/app/index.ts',
     "src/_index.html": "src/index.html",
-    "src/app/_config.ts": "src/app/config.ts",
+    "src/app/shared/_shared.module.ts": "src/app/shared/shared.module.ts",
+    "src/app/shared/index.ts": "src/app/shared/index.ts",
+    "src/app/shared/loader/_loader.component.ts": "src/app/shared/loader/loader.component.ts",
+    "src/app/shared/loader/_loader.component.scss": "src/app/shared/loader/loader.component.scss",
+    "src/app/shared/loader/_loader.component.spec.ts": "src/app/shared/loader/loader.component.spec.ts",
+    "src/app/shared/loader/__ionic.loader.component.html": "src/app/shared/loader/loader.component.html",
+    "src/app/models/_index.ts": "src/app/models/index.ts"
   };
   runFiles(this, filesCopy, {
     name: this.props.name,
     baseurl: this.props.baseurl,
-    entities
+    entities,
+    props
   });
 }
-
-function makeBaseEntities(entities) {
-  // Src/app/store/*
-  const cp = {
-    // "src/app/_routes.ts": "src/app/routes.ts",
-    "src/app/store/_index.ts": "src/app/store/index.ts",
-    "src/app/store/_helper.ts": "src/app/store/helper.ts",
-    "src/app/containers/_home.ts": "src/app/containers/home.ts",
-    "src/app/store/_state.ts": "src/app/store/state.ts",
-    "src/app/containers/_dashboard.ts": "src/app/containers/dashboard.ts",
-    "src/app/containers/_index.ts": "src/app/containers/index.ts",
-    "src/app/models/_index.ts": "src/app/models/index.ts",
-    // "src/app/ui/_index.ts": "src/app/ui/index.ts"
-  };
-  runFiles(this, cp, {
-    entities: entities
-  });
-}
-
 
 /**
  * Generate entitie folders with models, services, components and views
  * @param {*} entities 
  */
-function makeEntities(entities, relativeURI) {
+function makeEntities() {
+  const {entities, props } = this;
+  const relativeURI = this.props.relativeurl;
   entities.forEach(entity => {
 
     var relations = utils.getRelations(entity, entities);
@@ -177,7 +197,8 @@ function makeEntities(entities, relativeURI) {
     const data = {
       entity: entity,
       relativeURI: relativeURI || "",
-      relations
+      relations,
+      props
     };
 
     const files = {
@@ -211,7 +232,7 @@ function makeEntities(entities, relativeURI) {
  * @param {*} files 
  * @param {*} data 
  */
-function runFiles(run, files, data){
+function runFiles(run, files, data) {
   for (let from in files) {
     const to = files[from];
     run.fs.copyTpl(
