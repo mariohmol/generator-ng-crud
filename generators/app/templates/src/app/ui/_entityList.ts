@@ -42,31 +42,31 @@ export class <%= entity.capitalize %>ListComponent {
 
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>
-    this.<%= relation.singularUncapitalize %>Service.get<%= relation.pluralizeCapitalize %>().subscribe();
+    this.<%= relation.singularUncapitalize %>Service.get<%= relation.pluralizeCapitalize %>().then();
 <% }) -%>
 <% } -%>
 
-    this.<%= entity.singularUncapitalize %>Service.get<%= entity.pluralizeCapitalize %>().subscribe();
+    this.<%= entity.singularUncapitalize %>Service.get<%= entity.pluralizeCapitalize %>().then();
 
 <% if(relations){ -%>
 <% relations.forEach(function (relation) { -%>
-    this.store.changes.pluck('<%= relation.pluralizeUncapitalize %>').subscribe((<%= relation.pluralizeUncapitalize %>: any) => this.<%= relation.pluralizeUncapitalize %> = <%= relation.pluralizeUncapitalize %> );
+    this.store.changes.pluck('<%= relation.pluralizeUncapitalize %>').then((<%= relation.pluralizeUncapitalize %>: any) => this.<%= relation.pluralizeUncapitalize %> = <%= relation.pluralizeUncapitalize %> );
 <% }) -%>
 <% }-%>
 
-    this.store.changes.pluck('<%= entity.pluralizeUncapitalize %>').subscribe((<%= entity.pluralizeUncapitalize %>: any) => this.<%= entity.pluralizeUncapitalize %> = <%= entity.pluralizeUncapitalize %> );
+    this.store.changes.pluck('<%= entity.pluralizeUncapitalize %>').then((<%= entity.pluralizeUncapitalize %>: any) => this.<%= entity.pluralizeUncapitalize %> = <%= entity.pluralizeUncapitalize %> );
   }
 
   onCreate<%= entity.capitalize %>(<%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model) {
-    this.<%= entity.singularUncapitalize %>Service.create<%= entity.capitalize %>(<%= entity.singularUncapitalize %>).subscribe();
+    this.<%= entity.singularUncapitalize %>Service.create<%= entity.capitalize %>(<%= entity.singularUncapitalize %>).then();
   }
 
   onEdit<%= entity.capitalize %>(payload) {
-    this.<%= entity.singularUncapitalize %>Service.edit<%= entity.capitalize %>(payload.id, payload.<%= entity.singularUncapitalize %>).subscribe();
+    this.<%= entity.singularUncapitalize %>Service.edit<%= entity.capitalize %>(payload.id, payload.<%= entity.singularUncapitalize %>).then();
   }
 
   onDelete<%= entity.capitalize %>(id: string) {
-    this.<%= entity.singularUncapitalize %>Service.delete<%= entity.capitalize %>(id).subscribe();
+    this.<%= entity.singularUncapitalize %>Service.delete<%= entity.capitalize %>(id).then();
   }
 
 <% if(relations) { -%>

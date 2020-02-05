@@ -8,7 +8,7 @@ import { forkJoin, from } from 'rxjs';
 <% } -%>
 import { finalize } from 'rxjs/operators';
 
-import { environment } from '../../../environments/environment';
+import { environment } from '../../environments/environment';
 import { Logger, I18nService, AuthenticationService, untilDestroyed } from '../core';
 
 const log = new Logger('Login');

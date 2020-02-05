@@ -58,6 +58,7 @@ module.exports = class extends Generator {
         this.props = {
           ...props,
           target: 'ionic electron',
+          ui: 'ionic',
           tools: ''
         };
       }.bind(this)
@@ -75,7 +76,7 @@ module.exports = class extends Generator {
         // Copy Folders
         copyFolder = copyFolder.bind(this) 
         const folder = [`src/translations/`, `src/environments/`, `src/app/core/`, 
-        `src/app/home/`,   `src/app/shared/`, `src/app/login/`];
+        `src/app/home/`,   `src/app/shared/`, `src/app/login/`, `src/app/shell/`];
         folder.forEach(f=>copyFolder(f));
 
         // Make custom files
@@ -93,7 +94,7 @@ module.exports = class extends Generator {
 function copyFolder(folder, replace) {
   const files = glob.sync(`**${folder}**`, { dot: true, nodir: true, cwd: this.templatePath() })
   if (!replace) {
-    replace = (f) => f.replace(/_/g, '').replace(/auth./g, '').replace(/auth+ionic./g, '')
+    replace = (f) => f.replace(/_/g, '').replace('auth.', '').replace(/auth+ionic\./g, '').replace('ionic-tabs.','');
   }
   for (let i in files) {
     console.log(files[i])
