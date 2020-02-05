@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  URL_BASE: '<%= props.baseurl %>',
+  serverUrl: '<%= props.baseurl %>',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json'

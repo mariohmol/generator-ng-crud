@@ -5,11 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 export { AppComponent } from './app.component';
-import * as c from './containers';
-
-export const containers = mapValuesToArray(c);
-// export const ui = mapValuesToArray(u);
-
 
 <% entities.forEach(function (entity) { -%>
 import { <%= entity.capitalize %>Module } from './<%= entity.uncapitalize %>/<%= entity.uncapitalize %>.module';
@@ -18,9 +13,7 @@ import { <%= entity.capitalize %>Module } from './<%= entity.uncapitalize %>/<%=
   
 @NgModule({
   declarations: [
-    AppComponent,
-    ...containers,
-    // ...ui
+    AppComponent
   ],
   imports: [
     BrowserModule,

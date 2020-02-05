@@ -1,13 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { State, defaultState } from './state'
-
+// import { distinctUntilChanged } from 'rxjs/operators';
 const _store = new BehaviorSubject<State>(defaultState);
 
 @Injectable()
 export class Store {
   private _store = _store;
-  changes = this._store.asObservable().distinctUntilChanged()
+  changes = this._store.distinctUntilChanged()
 
   setState(state: State) {
     this._store.next(state);

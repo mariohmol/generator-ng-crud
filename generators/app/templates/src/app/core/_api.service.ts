@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
-  apiUrl = environment.apiBase;
+  apiUrl = environment.serverUrl;
   constructor(public http: HttpClient) {
     this.http = http;
   }

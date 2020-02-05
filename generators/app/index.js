@@ -59,7 +59,8 @@ module.exports = class extends Generator {
           ...props,
           target: 'ionic electron',
           ui: 'ionic',
-          tools: ''
+          tools: '',
+          auth: true
         };
       }.bind(this)
     );
@@ -67,17 +68,17 @@ module.exports = class extends Generator {
 
   writing() {
     console.log("after calling readFile", path.join(__dirname, this.props.dataModel));
-    
+
     const r = schemaParser(this.props.dataModel, this.props.baseurl)
       .then(r => {
         this.models = Object.keys(r.schemas).map(s => r.schemas[s].schema);
         this.entities = utils.getEntities(r.schemas, ["relativeURI"]);
 
         // Copy Folders
-        copyFolder = copyFolder.bind(this) 
-        const folder = [`src/translations/`, `src/environments/`, `src/app/core/`, 
-        `src/app/home/`,   `src/app/shared/`, `src/app/login/`, `src/app/shell/`];
-        folder.forEach(f=>copyFolder(f));
+        copyFolder = copyFolder.bind(this)
+        const folder = [`src/translations/`, `src/environments/`, `src/app/core/`,
+          `src/app/home/`, `src/app/shared/`, `src/app/login/`, `src/app/shell/`];
+        folder.forEach(f => copyFolder(f));
 
         // Make custom files
         (makeApp.bind(this))();
@@ -94,10 +95,13 @@ module.exports = class extends Generator {
 function copyFolder(folder, replace) {
   const files = glob.sync(`**${folder}**`, { dot: true, nodir: true, cwd: this.templatePath() })
   if (!replace) {
-    replace = (f) => f.replace(/_/g, '').replace('auth.', '').replace(/auth+ionic\./g, '').replace('ionic-tabs.','');
+    replace = (f) => f.replace(/_/g, '').replace('auth.', '').replace(/auth+ionic\./g, '').replace('ionic-tabs.', '');
   }
   for (let i in files) {
     console.log(files[i])
+    if (files[i].indexOf('material-') == 0) {
+      return
+    }
     this.fs.copyTpl(
       this.templatePath(files[i]),
       this.destinationPath(replace(files[i])),
@@ -188,7 +192,7 @@ function makeApp() {
  * @param {*} entities 
  */
 function makeEntities() {
-  const {entities, props } = this;
+  const { entities, props } = this;
   const relativeURI = this.props.relativeurl;
   entities.forEach(entity => {
 

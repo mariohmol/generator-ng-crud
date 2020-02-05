@@ -20,7 +20,7 @@ const log = new Logger('Login');
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  version: string | null = environment.version;
+  version: string | null = environment.production;
   error: string | undefined;
   loginForm!: FormGroup;
   isLoading = false;
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 <% } -%>
       }),
       untilDestroyed(this)
-    ).subscribe(credentials => {
+    ).subscribe( (credentials: any) => {
       log.debug(`${credentials.username} successfully logged in`);
       this.router.navigate([ this.route.snapshot.queryParams.redirect || '/'], { replaceUrl: true });
     }, error => {
