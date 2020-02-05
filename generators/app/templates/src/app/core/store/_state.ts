@@ -2,7 +2,7 @@ import {
   <% entities.forEach(function (entity) { -%>
   <%= entity.capitalize %>Model,
   <% }) -%>
-}  from '../models';
+}  from '../../models';
 
 export interface State {
   <% entities.forEach(function (entity) { -%>

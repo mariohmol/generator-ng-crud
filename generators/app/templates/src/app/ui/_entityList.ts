@@ -50,11 +50,11 @@ export class <%= entity.capitalize %>ListComponent {
 
 <% if(relations){ -%>
 <% relations.forEach(function (relation) { -%>
-    this.store.changes.pluck('<%= relation.pluralizeUncapitalize %>').then((<%= relation.pluralizeUncapitalize %>: any) => this.<%= relation.pluralizeUncapitalize %> = <%= relation.pluralizeUncapitalize %> );
+    // TODO: this.store.changes.pluck('<%= relation.pluralizeUncapitalize %>').then((<%= relation.pluralizeUncapitalize %>: any) => this.<%= relation.pluralizeUncapitalize %> = <%= relation.pluralizeUncapitalize %> );
 <% }) -%>
 <% }-%>
 
-    this.store.changes.pluck('<%= entity.pluralizeUncapitalize %>').then((<%= entity.pluralizeUncapitalize %>: any) => this.<%= entity.pluralizeUncapitalize %> = <%= entity.pluralizeUncapitalize %> );
+    //TODO: this.store.changes.pluck('<%= entity.pluralizeUncapitalize %>').then((<%= entity.pluralizeUncapitalize %>: any) => this.<%= entity.pluralizeUncapitalize %> = <%= entity.pluralizeUncapitalize %> );
   }
 
   onCreate<%= entity.capitalize %>(<%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model) {

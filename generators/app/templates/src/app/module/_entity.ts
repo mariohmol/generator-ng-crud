@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CoreModule } from '../core';
+import { SharedModule } from '../shared';
 import { <%= entity.capitalize %>Routes } from './<%= entity.uncapitalize %>.routing';
 import { <%= entity.capitalize %>Service } from './<%= entity.uncapitalize %>.service';
 import { <%= entity.capitalize %>CreateComponent } from './<%= entity.uncapitalize %>Create.component';
@@ -27,6 +29,8 @@ import { <%= entity.capitalize %>ViewComponent } from './<%= entity.uncapitalize
     <%= entity.capitalize %>ListComponent
   ],
   imports: [
+    CoreModule,
+    SharedModule,
     CommonModule,
     FormsModule,
     RouterModule.forRoot(<%= entity.capitalize %>Routes),

@@ -36,7 +36,7 @@ module.exports = class extends Generator {
         type: "input",
         name: "baseurl",
         message: "Server API URL",
-        default: "http://localhost:3500"
+        default: "http://localhost:8080"
       },
       {
         type: "input",
@@ -99,8 +99,8 @@ function copyFolder(folder, replace) {
   }
   for (let i in files) {
     console.log(files[i])
-    if (files[i].indexOf('material-') == 0) {
-      return
+    if (files[i].indexOf('material-') >= 0 || files[i].indexOf('bootstrap.') >= 0) {
+      continue
     }
     this.fs.copyTpl(
       this.templatePath(files[i]),
