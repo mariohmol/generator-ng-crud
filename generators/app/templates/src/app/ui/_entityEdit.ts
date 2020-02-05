@@ -28,6 +28,9 @@ export class <%= entity.capitalize %>EditComponent  implements OnInit {
     edit<%= entity.singularCapitalize %>: <%= entity.capitalize %>Model;
 
     ngOnInit() {
+      if(!this.<%= entity.singularUncapitalize %>){
+        this.<%= entity.singularUncapitalize %> = {};
+      }
       // clone the user object
       this.edit<%= entity.singularCapitalize %> = {
         <%= entity.key %>: <%= entity.entity[entity.key].defaultForm %><% Object.keys(entity.entity).forEach(function(field) { -%>

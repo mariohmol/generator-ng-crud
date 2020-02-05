@@ -185,19 +185,20 @@ function makeEntities(entities, relativeURI) {
       "src/app/services/_entity.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}.service.ts`,
       "src/app/module/_entity.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}.module.ts`,
       "src/app/routing/_entity.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}.routing.ts`,
-      "src/app/containers/_entity.ts": "src/app/containers/" + entity.uncapitalize + ".ts",
 
       // CONTROLLERS
-      "src/app/ui/_entity.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}.component.ts`,
+      "src/app/ui/_entityView.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}View.component.ts`,
       "src/app/ui/_entityCreate.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Create.component.ts`,
       "src/app/ui/_entityDelete.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Delete.component.ts`,
       "src/app/ui/_entityEdit.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Edit.component.ts`,
+      "src/app/ui/_entityList.ts": `src/app/${entity.uncapitalize}/${entity.uncapitalize}List.component.ts`,
 
       // VIEW
-      "src/app/ui/_entity.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}.component.html`,
+      "src/app/ui/_entityView.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}View.component.html`,
       "src/app/ui/_entityCreate.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Create.component.html`,
       "src/app/ui/_entityDelete.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Delete.component.html`,
-      "src/app/ui/_entityEdit.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Edit.component.html`
+      "src/app/ui/_entityEdit.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}Edit.component.html`,
+      "src/app/ui/_entityList.html": `src/app/${entity.uncapitalize}/${entity.uncapitalize}List.component.html`
     };
 
     runFiles(this, files, data);

@@ -2,7 +2,7 @@
   "name": "generator-ng-crud",
   "version": "0.0.0",
   "description": "Angular CRUD generator from JSONSchema",
-  "homepage": "https://github.com/mariohmol/mean-crud-generator/",
+  "homepage": "https://github.com/mariohmol/generator-ng-crud",
   "author": {
     "name": "Mario Mol",
     "email": "mariohmol@gmail.com",

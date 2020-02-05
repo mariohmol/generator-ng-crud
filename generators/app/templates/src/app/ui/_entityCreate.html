@@ -10,11 +10,18 @@
         <% if (entity.entity[field].textArea) { -%>
         <textarea name="<%= field %>" [(ngModel)]="<%= entity.singularUncapitalize -%>.<%= field %>" rows="10"
           cols="80"></textarea>
+        <% } else if(entity.entity[field] === "boolean" || entity.entity[field].type === "boolean"){ -%>
+        <input type="checkbox" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+          name="<%= field %>" />
+        <% } else if(entity.entity[field] === "number" || entity.entity[field].type === "number"){ -%>
+        <input type="number" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+          name="<%= field %>" />
+        <% } else if(entity.entity[field] === "string" || entity.entity[field].type === "string"){ -%>
+        <input type="number" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+          name="<%= field %>" />
         <% } else { -%>
-        <input type="<% if(entity.entity[field] === "boolean" || entity.entity[field].type === "boolean") { -%>checkbox"
-          <% } -%><% if(entity.entity[field] === "number" || entity.entity[field].type === "number") { -%>number"
-          <% } -%><% if(entity.entity[field] === "string" || entity.entity[field].type === "string") { -%>text" <% } -%>
-          class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>" />
+        <input
+          type="text" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>" />
         <%} -%>
       </div>
     </div>

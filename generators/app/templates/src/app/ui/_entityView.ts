@@ -12,9 +12,9 @@ import {
 
 @Component({
     selector: '[<%= entity.singularUncapitalize %>-ui]',
-    templateUrl: './<%= entity.singularUncapitalize %>.component.html'
+    templateUrl: './<%= entity.singularUncapitalize %>View.component.html'
 })
-export class <%= entity.capitalize %>Component {
+export class <%= entity.capitalize %>ViewComponent {
     @Input() <%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model;
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>

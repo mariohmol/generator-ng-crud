@@ -1,7 +1,5 @@
-// import * as services from './services';
-import * as c from './containers';
-// import * as u from './ui';
 
+import * as c from './containers';
 import { ApiService } from './api';
 import { Store } from './store';
 import { StoreHelper } from './store/helper'; 

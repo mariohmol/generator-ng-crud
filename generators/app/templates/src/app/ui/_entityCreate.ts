@@ -24,9 +24,10 @@ export class <%= entity.capitalize %>CreateComponent {
     @Output() onSaveHandler = new EventEmitter();
 
     <%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model = {
-      <%= entity.key %>: <%= entity.entity[entity.key].defaultForm %> <% Object.keys(entity.entity).forEach(function(field) { -%>
-<% if(!entity.entity[field].key && entity.entity[field].require) { -%>,
-      <%= field %>: <%= field.defaultForm %>
+      //<%= entity.key %>: <%= entity.entity[entity.key].defaultForm %> 
+      <% Object.keys(entity.entity).forEach(function(field) { -%>
+<% if(field !== entity.key) { -%>
+      <%= field %>: null,
 <% } -%>
 <% }) -%>
     };

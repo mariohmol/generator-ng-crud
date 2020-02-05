@@ -22,62 +22,9 @@ import 'rxjs/Rx';
 
 @Component({
   selector: '<%= entity.pluralizeUncapitalize %>-container',
-  template: `
-    <div>
-        <h1><%= entity.pluralizeCapitalize %></h1>                    
-            <<%= entity.singularUncapitalize %>-create-ui 
-<% if(relations) { -%>
-<% relations.forEach(function (relation) { -%>
-                [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>"
-<% }) } -%>              
-                (onSaveHandler)="onCreate<%= entity.capitalize %>($event)" >
-            </<%= entity.singularUncapitalize %>-create-ui>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-<% Object.keys(entity.entity).forEach(function(field) { -%>
-              <th>
-    <% if(entity.entity[field].referent ) { -%>
-            <%= entity.entity[field].referent -%> <%= entity.entity[field].render -%>
-    <%} else { -%>
-            <%= field -%>
-    <%} -%>    
-              </th>            
-<%}) -%>
-              <th>
-                Edit
-              </th>
-              <th>
-                Delete
-              </th>
-            </tr>
-        </thead>
-       
-        <tbody>
-            <tr <%= entity.singularUncapitalize %>-ui 
-                *ngFor="let <%= entity.singularUncapitalize %> of <%= entity.pluralizeUncapitalize %>" 
-                [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>" 
-<% if(relations) { -%>
-<% relations.forEach(function (relation) { -%>
-                [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>"                
-                [<%= relation.singularUncapitalize %>]="get<%= relation.singularCapitalize %><%= "(" + entity.singularUncapitalize + "." -%>
-<% Object.keys(entity.entity).forEach(function(field) { -%>
-<% if(entity.entity[field].referent && entity.entity[field].referent === relation.name) { -%><%= field -%>)"
-<% } -%>
-<% }) -%>
-<% }) -%>
-<% } -%>                
-                (onEditHandler)="onEdit<%= entity.capitalize %>($event)"
-                (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)"
-            >
-            </tr>
-        </tbody>
-        </table> 
-        
-    `
+  templateUrl: './<%= entity.singularUncapitalize %>List.component.html'
 })
-export class <%= entity.capitalize %>Container {
+export class <%= entity.capitalize %>ListComponent {
   <%= entity.pluralizeUncapitalize %>: <%= entity.capitalize %>Model[] = [];
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>
