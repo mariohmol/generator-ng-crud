@@ -70,6 +70,7 @@ export class <%= entity.capitalize %>ListComponent {
   onDelete<%= entity.capitalize %>(id: string) {
     this.<%= entity.singularUncapitalize %>Service.delete<%= entity.capitalize %>(id).then();
   }
+  
 
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>

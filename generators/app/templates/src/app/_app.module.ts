@@ -89,6 +89,9 @@ import { <%= entity.capitalize %>Module } from './<%= entity.uncapitalize %>/<%=
 <% if (props.angulartics ) { -%>
     Angulartics2Module.forRoot(),
 <% } -%>
+<% entities.forEach(function (entity) { -%>
+  <%= entity.capitalize %>Module,
+<% }) -%>
     AppRoutingModule // must be imported as the last module as it contains the fallback route
   ],
   declarations: [AppComponent],
@@ -101,9 +104,6 @@ import { <%= entity.capitalize %>Module } from './<%= entity.uncapitalize %>/<%=
     { provide: LocationStrategy, useClass: HashLocationStrategy }
 <%   } -%>
 <% } -%>
-<% entities.forEach(function (entity) { -%>
-  <%= entity.capitalize %>Module,
-  <% }) -%>
 <% if (props.target.includes('cordova')) { -%>
     Keyboard,
     StatusBar,

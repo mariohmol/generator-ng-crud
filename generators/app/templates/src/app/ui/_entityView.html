@@ -1,22 +1,26 @@
 ﻿<% Object.keys(entity.entity).forEach(function(field){ if(!entity.entity[field].referent) { -%>
-<td>{{<%= entity.singularUncapitalize %>.<%= field %>}}</td>
+<ion-col>{{<%= entity.singularUncapitalize %>.<%= field %>}}</ion-col>
 <%} }) -%>
 <% if(relations) { -%>
 <% relations.forEach(function (relation) { -%>
 <% Object.keys(entity.entity).forEach(function(field){ if(entity.entity[field].render) { -%>
-<td *ngIf="<%= relation.singularUncapitalize %>">
+<ion-col *ngIf="<%= relation.singularUncapitalize %>">
     {{<%= relation.singularUncapitalize %>.<%= entity.entity[field].render %> || "No <%= relation.singularCapitalize %>"}}
-</td>
+</ion-col>
 <%} }) -%>
-<td *ngIf="!<%= relation.singularUncapitalize %>"></td>
+<ion-col *ngIf="!<%= relation.singularUncapitalize %>"></ion-col>
 <% }) -%>
 <% } -%>
-<td <%= entity.singularUncapitalize %>-edit-ui [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
-    <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
-    [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) -%> <% } -%>
-    (onEditHandler)="onEdit<%= entity.capitalize %>($event)">
-</td>
-<td <%= entity.singularUncapitalize %>-delete-ui
-    [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
-    (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)">
-</td>
+<ion-col> 
+    <div <%= entity.singularUncapitalize %>-edit-ui [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
+        <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
+        [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) -%> <% } -%>
+        (onEditHandler)="onEdit<%= entity.capitalize %>($event)">
+    </div>
+</ion-col>
+<ion-col>
+    <div <%= entity.singularUncapitalize %>-delete-ui
+        [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
+        (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)">
+    </div>
+</ion-col>
