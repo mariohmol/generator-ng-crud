@@ -13,26 +13,26 @@ export class <%= entity.capitalize %>Service {
 
     get<%= entity.pluralizeCapitalize %>() {
         return this.apiService.get(this.path)
-                .then((res: any) => this.storeHelper.update('<%= entity.uncapitalize %>', res.data));
+                .then((res: any) => this.storeHelper.update('<%= entity.pluralizeUncapitalize %>', res));
     }
 
     get<%= entity.singularCapitalize %>(id) {
         return this.apiService.get(`${this.path}/${id}`)
-                .then(<%= entity.singularUncapitalize %> => this.storeHelper.findAndUpdate('<%= entity.uncapitalize %>', <%= entity.singularUncapitalize %>));
+                .then(<%= entity.singularUncapitalize %> => this.storeHelper.findAndUpdate('<%= entity.pluralizeUncapitalize %>', <%= entity.singularUncapitalize %>));
     }
 
     create<%= entity.capitalize %>(<%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model) {
         return this.apiService.post(this.path, <%= entity.singularUncapitalize %>)
-                .then(saved<%= entity.singularCapitalize %>=> this.storeHelper.add('<%= entity.uncapitalize %>', saved<%= entity.singularCapitalize %>));
+                .then(saved<%= entity.singularCapitalize %>=> this.storeHelper.add('<%= entity.pluralizeUncapitalize %>', saved<%= entity.singularCapitalize %>));
     }
 
     edit<%= entity.capitalize %>(id: string, <%= entity.singularUncapitalize %>: <%= entity.capitalize %>Model) {
         return this.apiService.put(`${this.path}/${id}`, <%= entity.singularUncapitalize %>)
-                 .then(edited<%= entity.singularCapitalize %> => this.storeHelper.findAndUpdate('<%= entity.uncapitalize %>', edited<%= entity.singularCapitalize %>));
+                 .then(edited<%= entity.singularCapitalize %> => this.storeHelper.findAndUpdate('<%= entity.pluralizeUncapitalize %>', edited<%= entity.singularCapitalize %>));
     }
 
     delete<%= entity.capitalize %>(id: string) {
         return this.apiService.delete(`${this.path}/${id}`)
-             .then((res: any) => this.storeHelper.findAndDelete('<%= entity.uncapitalize %>', res.id));
+             .then((res: any) => this.storeHelper.findAndDelete('<%= entity.pluralizeUncapitalize %>', id));
     }
 };

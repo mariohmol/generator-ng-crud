@@ -14,7 +14,7 @@ module.exports = class extends Generator {
       yosay("Welcome to the " + chalk.red("Angular 2 CRUD") + " generator!")
     );
 
-    var prompts = [
+    let prompts = [
       {
         type: "input",
         name: "name",
@@ -51,9 +51,16 @@ module.exports = class extends Generator {
         default: "../schema"
       }
     ];
+    let promptsData = prompts;
+    if (this._args.find(a => a === 'development')) {
+      promptsData = [];
+    }
 
-    return this.prompt(prompts).then(
+    return this.prompt(promptsData).then(
       function (props) {
+        if (Object.keys(props).length === 0) {
+          prompts.forEach(p => props[p.name] = p.default);
+        }
         // To access props later use this.props.someAnswer;
         this.props = {
           ...props,
@@ -91,11 +98,17 @@ module.exports = class extends Generator {
   }
 };
 
-
+function replaceFilesNames(f) {
+  return f.replace(/_/g, '')
+    .replace('auth.', '')
+    .replace('ionic.', '')
+    .replace('auth+ionic.', '')
+    .replace('ionic-tabs.', '')
+}
 function copyFolder(folder, replace) {
   const files = glob.sync(`**${folder}**`, { dot: true, nodir: true, cwd: this.templatePath() })
   if (!replace) {
-    replace = (f) => f.replace(/_/g, '').replace('auth.', '').replace(/auth+ionic\./g, '').replace('ionic-tabs.', '');
+    replace = (f) => replaceFilesNames(f);
   }
   for (let i in files) {
     console.log(files[i])
@@ -167,9 +180,10 @@ function makeApp() {
     'src/_vendor.ts': 'src/vendor.ts',
     'src/_main.ts': 'src/main.ts',
     'src/app/_app.component.ts': 'src/app/app.component.ts',
-    'src/app/app.component.html': 'src/app/app.component.html',
-    'src/app/app.component.css': 'src/app/app.component.css',
+    'src/app/_app.component.html': 'src/app/app.component.html',
+    'src/app/_app.component.scss': 'src/app/app.component.scss',
     'src/app/_app.module.ts': 'src/app/app.module.ts',
+    'src/app/_app-routing.module.ts': 'src/app/app-routing.module.ts',
     "src/_index.html": "src/index.html",
     "src/app/shared/_shared.module.ts": "src/app/shared/shared.module.ts",
     "src/app/shared/index.ts": "src/app/shared/index.ts",

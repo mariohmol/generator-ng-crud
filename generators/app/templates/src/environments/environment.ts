@@ -9,8 +9,14 @@ export const environment = {
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json'
-  }
+  },
+  hmr: true,
+  version: '1.0', //process.env.npm_package_version + '-dev',
+  defaultLanguage: 'en-US',
+  supportedLanguages: [
+    'en-US',
+    'fr-FR'
+  ]
 };
-
 
 

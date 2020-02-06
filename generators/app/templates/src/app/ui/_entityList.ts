@@ -46,7 +46,9 @@ export class <%= entity.capitalize %>ListComponent {
 <% }) -%>
 <% } -%>
 
-    this.<%= entity.singularUncapitalize %>Service.get<%= entity.pluralizeCapitalize %>().then();
+    this.<%= entity.singularUncapitalize %>Service.get<%= entity.pluralizeCapitalize %>().then(p=>{
+      this.<%= entity.pluralizeUncapitalize %>=p;
+    });
 
 <% if(relations){ -%>
 <% relations.forEach(function (relation) { -%>
