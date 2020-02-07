@@ -1,72 +1,75 @@
-﻿<div>
-  <h1><%= entity.pluralizeCapitalize %></h1>
-  <<%= entity.singularUncapitalize %>-create-ui <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
-    [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) } -%>
-    (onSaveHandler)="onCreate<%= entity.capitalize %>($event)">
-  </<%= entity.singularUncapitalize %>-create-ui>
-</div>
-<ion-grid class="table">
+﻿<ion-content  overflow-scroll="true">
+  <div>
+    <h1><%= entity.pluralizeCapitalize %></h1>
+    <<%= entity.singularUncapitalize %>-create-ui <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
+      [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) } -%>
+      (onSaveHandler)="onCreate<%= entity.capitalize %>($event)">
+    </<%= entity.singularUncapitalize %>-create-ui>
+  </div>
+  <ion-grid class="table">
 
-    <ion-row>
-      <% Object.keys(entity.entity).forEach(function(field) { -%>
-      <ion-col>
-        <% if(entity.entity[field].referent ) { -%>
-        <%= entity.entity[field].referent -%> <%= entity.entity[field].render -%>
-        <%} else { -%>
-        <%= field -%>
-        <%} -%>
-      </ion-col>
-      <%}) -%>
-      <ion-col>
-        Edit
-      </ion-col>
-      <ion-col>
-        Delete
-      </ion-col>
-    </ion-row>
-  <ion-row 
-      *ngFor="let <%= entity.singularUncapitalize %> of <%= entity.pluralizeUncapitalize %>" >
-
-      
-      <!-- [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>" <% if(relations) { -%>
-      <% relations.forEach(function (relation) { -%>
-      [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>"
-      [<%= relation.singularUncapitalize %>]="get<%= relation.singularCapitalize %><%= "(" + entity.singularUncapitalize + "." -%>
-<% Object.keys(entity.entity).forEach(function(field) { -%>
-<% if(entity.entity[field].referent && entity.entity[field].referent === relation.name) { -%><%= field -%>)" <% } -%>
-      <% }) -%> <% }) -%> <% } -%> (onEditHandler)="onEdit<%= entity.capitalize %>($event)"
-      (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)" -->
-
-
-      <% Object.keys(entity.entity).forEach(function(field){ if(!entity.entity[field].referent) { -%>
-        <ion-col>{{<%= entity.singularUncapitalize %>.<%= field %>}}</ion-col>
-        <%} }) -%>
-        <% if(relations) { -%>
-        <% relations.forEach(function (relation) { -%>
-        <% Object.keys(entity.entity).forEach(function(field){ if(entity.entity[field].render) { -%>
-        <ion-col *ngIf="<%= relation.singularUncapitalize %>">
-            {{<%= relation.singularUncapitalize %>.<%= entity.entity[field].render %> || "No <%= relation.singularCapitalize %>"}}
+      <ion-row>
+        <% Object.keys(entity.entity).forEach(function(field) { -%>
+        <ion-col>
+          <% if(entity.entity[field].referent ) { -%>
+          <%= entity.entity[field].referent -%> <%= entity.entity[field].render -%>
+          <%} else { -%>
+          <%= field -%>
+          <%} -%>
         </ion-col>
-        <%} }) -%>
-        <ion-col *ngIf="!<%= relation.singularUncapitalize %>"></ion-col>
-        <% }) -%>
-        <% } -%>
-        <ion-col> 
-            <div <%= entity.singularUncapitalize %>-edit-ui [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
-                <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
-                [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) -%> <% } -%>
-                (onEditHandler)="onEdit<%= entity.capitalize %>(<%= entity.singularUncapitalize %>)">
-            </div>
+        <%}) -%>
+        <ion-col>
+          Edit
         </ion-col>
         <ion-col>
-            <div <%= entity.singularUncapitalize %>-delete-ui
-                [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
-                (onDeleteHandler)="onDelete<%= entity.capitalize %>(<%= entity.singularUncapitalize %>.id)">
-            </div>
+          Delete
         </ion-col>
+      </ion-row>
+    <ion-row 
+        *ngFor="let <%= entity.singularUncapitalize %> of <%= entity.pluralizeUncapitalize %>" >
+
+        
+        <!-- [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>" <% if(relations) { -%>
+        <% relations.forEach(function (relation) { -%>
+        [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>"
+        [<%= relation.singularUncapitalize %>]="get<%= relation.singularCapitalize %><%= "(" + entity.singularUncapitalize + "." -%>
+  <% Object.keys(entity.entity).forEach(function(field) { -%>
+  <% if(entity.entity[field].referent && entity.entity[field].referent === relation.name) { -%><%= field -%>)" <% } -%>
+        <% }) -%> <% }) -%> <% } -%> (onEditHandler)="onEdit<%= entity.capitalize %>($event)"
+        (onDeleteHandler)="onDelete<%= entity.capitalize %>($event)" -->
 
 
- 
-  </ion-row>
+        <% Object.keys(entity.entity).forEach(function(field){ if(!entity.entity[field].referent) { -%>
+          <ion-col>{{<%= entity.singularUncapitalize %>.<%= field %>}}</ion-col>
+          <%} }) -%>
+          <% if(relations) { -%>
+          <% relations.forEach(function (relation) { -%>
+          <% Object.keys(entity.entity).forEach(function(field){ if(entity.entity[field].render) { -%>
+          <ion-col *ngIf="<%= relation.singularUncapitalize %>">
+              {{<%= relation.singularUncapitalize %>.<%= entity.entity[field].render %> || "No <%= relation.singularCapitalize %>"}}
+          </ion-col>
+          <%} }) -%>
+          <ion-col *ngIf="!<%= relation.singularUncapitalize %>"></ion-col>
+          <% }) -%>
+          <% } -%>
+          <ion-col> 
+              <div <%= entity.singularUncapitalize %>-edit-ui [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
+                  <% if(relations) { -%> <% relations.forEach(function (relation) { -%>
+                  [<%= relation.pluralizeUncapitalize %>]="<%= relation.pluralizeUncapitalize %>" <% }) -%> <% } -%>
+                  (onEditHandler)="onEdit<%= entity.capitalize %>(<%= entity.singularUncapitalize %>)">
+              </div>
+          </ion-col>
+          <ion-col>
+              <div <%= entity.singularUncapitalize %>-delete-ui
+                  [<%= entity.singularUncapitalize %>]="<%= entity.singularUncapitalize %>"
+                  (onDeleteHandler)="onDelete<%= entity.capitalize %>(<%= entity.singularUncapitalize %>.id)">
+              </div>
+          </ion-col>
 
-</ion-grid>
+
+  
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

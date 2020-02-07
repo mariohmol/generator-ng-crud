@@ -8,7 +8,10 @@ const path = require("path");
 const utils = require("../utils");
 const schemaParser = require('../utils/schema-parser');
 module.exports = class extends Generator {
+
   prompting() {
+    // console.log(this.options,'><<<<<')
+    this.options.dryRun = true;
     // Have Yeoman greet the user.
     this.log(
       yosay("Welcome to the " + chalk.red("Angular 2 CRUD") + " generator!")
@@ -111,7 +114,6 @@ function copyFolder(folder, replace) {
     replace = (f) => replaceFilesNames(f);
   }
   for (let i in files) {
-    console.log(files[i])
     if (files[i].indexOf('material-') >= 0 || files[i].indexOf('bootstrap.') >= 0) {
       continue
     }

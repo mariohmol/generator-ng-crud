@@ -21,6 +21,15 @@ yo ng-crud
 Thanks to:
 * https://github.com/gorums/generator-angular-2-crud
 
+Needs reviewL
+
+* https://github.com/guillotinaweb/ngx-schema-form
+* https://github.com/hamzahamidi/ajsf#readme
+* https://github.com/5hivams/ionic2_json_schema_form#readme
+* https://github.com/jessehon/angular2-json-schema-form-ionic
+* 
+
+§° `§§§
 ## License
 
 Apache-2.0 © [Mario Mol]()

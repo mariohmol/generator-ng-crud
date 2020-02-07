@@ -1,27 +1,148 @@
-﻿<div>
+﻿<!-- <ion-content  overflow-scroll="true"> -->
   <div *ngIf="!addNew"><ion-button class="btn btn-primary" (click)="onAddNew()">Add New
       <%= entity.singularCapitalize %></ion-button></div>
   <form *ngIf="addNew">
-    <% Object.keys(entity.entity).forEach(function(field) { -%>
+  <% Object.keys(entity.entity).forEach(function(field) { -%>
     <% if(!entity.entity[field].key && !entity.entity[field].referent) { -%>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label"><%= field %></label>
       <div class="col-sm-10">
+        <!-- TEXT AREA -->
         <% if (entity.entity[field].textArea) { -%>
-        <textarea name="<%= field %>" [(ngModel)]="<%= entity.singularUncapitalize -%>.<%= field %>" rows="10"
-          cols="80"></textarea>
+        <ion-textarea name="<%= field %>" 
+          [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="<%= entity.singularUncapitalize -%>.<%= field %>" rows="10"
+          cols="80"></ion-textarea>
+
+        <!-- BOOLEAN-->
         <% } else if(entity.entity[field] === "boolean" || entity.entity[field].type === "boolean"){ -%>
-        <input type="checkbox" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
-          name="<%= field %>" />
+          <ion-toggle [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+            [ngModelOptions]="{standalone: true}"
+            name="<%= field %>"></ion-toggle>
+
+          <!-- NUMBER -->
         <% } else if(entity.entity[field] === "number" || entity.entity[field].type === "number"){ -%>
-        <input type="number" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
-          name="<%= field %>" />
+        <ion-input type="number" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+          [ngModelOptions]="{standalone: true}"
+          name="<%= field %>" ></ion-input>
+
+
+          <!-- INTEGER -->
+        <% } else if(entity.entity[field] === "integer" || entity.entity[field].type === "integer"){ -%>
+          <ion-input type="number" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+            [ngModelOptions]="{standalone: true}"
+            name="<%= field %>" ></ion-input>
+
+            <!-- OBJECT-->
+            <!-- record, file , user--> 
+
+          <!-- STRING - Many formats-->
         <% } else if(entity.entity[field] === "string" || entity.entity[field].type === "string"){ -%>
-        <input type="number" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
-          name="<%= field %>" />
+
+          <!-- DATE -->
+          <% if (entity.entity[field].format === 'date') { -%>
+            <ion-datetime displayFormat="DD/MM/YYYY" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"></ion-datetime>
+
+          <!-- TIME --> 
+          <% } else if (entity.entity[field].format === 'time') { -%>
+            <ion-datetime displayFormat="HH:mm" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"></ion-datetime>
+
+          <!-- DATE TIME -->
+          <% } else if (entity.entity[field].format === 'date-time') { -%>
+            <ion-datetime displayFormat="HH:mm" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"></ion-datetime>
+
+          <!-- DATE TIME -->
+          <% } else if (entity.entity[field].items && entity.entity[field].items.examples) { -%>
+            <ion-datetime displayFormat="HH:mm" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"></ion-datetime>
+
+          <!-- ADDRESS -->
+          <% } else if (entity.entity[field].format === 'address') { -%>
+          <ion-input type="text" 
+          [ngModelOptions]="{standalone: true}"
+          [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+            name="<%= field %>" ></ion-input>
+
+          <% } else if (entity.entity[field].format === 'telephone') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+
+
+          <% } else if (entity.entity[field].format === 'mobile') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+
+          <% } else if (entity.entity[field].format === 'email') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+
+          <% } else if (entity.entity[field].format === 'url') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+              
+
+          <% } else if (entity.entity[field].format === 'currency') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+
+          <% } else if (entity.entity[field].format === 'percentage') { -%>
+            <ion-input type="text" 
+            [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>"
+              name="<%= field %>" ></ion-input>
+
+
+          <% } else { -%>
+
+            
+
+          <%} -%>
+
+
+        <!-- ARRAY-->
+        <% } else if(entity.entity[field] === "array" || entity.entity[field].type === "array"){ -%>
+
+          <% if(entity.entity[field].items && entity.entity[field].items.examples){ -%>
+
+            <!-- Checkboxes in a List -->
+            <ion-list>
+              <% entity.entity[field].items.examples.forEach(function(ex) { -%>
+                <ion-item>
+                  <ion-label><%=ex %></ion-label>
+                  <ion-checkbox slot="end" 
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" 
+                    value="<%=ex %>"></ion-checkbox>
+                </ion-item>
+              <% }) -%>
+            </ion-list>
+
+            <%} -%>
+          
+
+
+
         <% } else { -%>
-        <input
-          type="text" class="form-control" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>" />
+        <ion-input
+        [ngModelOptions]="{standalone: true}"
+          type="text" [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>" ></ion-input>
         <%} -%>
       </div>
     </div>
@@ -35,7 +156,9 @@
       <div class="col-sm-10">
         <% Object.keys(entity.entity).forEach(function(field){ -%>
         <% if(entity.entity[field].render && entity.entity[field].referent === relation.name ) { -%>
-        <select [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>">
+        <select 
+        [ngModelOptions]="{standalone: true}"
+        [(ngModel)]="<%= entity.singularUncapitalize %>.<%= field %>" name="<%= field %>">
           <option *ngFor="let e of <%= relation.pluralizeUncapitalize %>" [ngValue]="e.<%= relation.key %>">
             {{e.<%= entity.entity[field].render %>}}</option>
         </select>
@@ -49,5 +172,4 @@
     <ion-button class="btn btn-success" (click)="onSave()">Save</ion-button>
     <ion-button class="btn btn-default" (click)="onCancel()">Cancel</ion-button>
   </form>
-</div>
-<hr />
+<!-- </ion-content> -->

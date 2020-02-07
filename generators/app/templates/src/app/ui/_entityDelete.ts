@@ -54,7 +54,8 @@ export class <%= entity.capitalize %>DeleteComponent {
     `,
   })
   export class <%= entity.capitalize %>DeleteModalPage {
-    @Output() onDeleteHandler = new EventEmitter();
+    @Input() onDeleteHandler;
+    // @Output() onDeleteHandler = new EventEmitter();
     <%= entity.singularUncapitalize %>: any = {};
     constructor(navParams: NavParams, public modalCtrl: ModalController) {
         this.<%= entity.singularUncapitalize %> = navParams.get('<%= entity.singularUncapitalize %>');
